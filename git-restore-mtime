@@ -36,6 +36,7 @@ import sys, os.path
 import logging as logger
 import argparse
 import time
+import locale
 
 if sys.version_info[:2] >= (3, 0):
     def text(s):
@@ -242,7 +243,8 @@ def parselog(merge=False, filterlist=[]):
                               stdout=subprocess.PIPE)
     for line in gitobj.stdout:
         loglines += 1
-        line = text(line.strip())
+        #line = text(line.strip())
+        line = line.strip().decode("utf-8").encode(locale.getpreferredencoding())
 
         # Blank line between Date and list of files
         if not line: continue
